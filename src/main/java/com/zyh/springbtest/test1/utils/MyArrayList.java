@@ -67,11 +67,12 @@ public class MyArrayList<E> {
         }
         //该表元素下标
         System.arraycopy(data, index + 1, data, index, current - 1 - index);
-        /**
+        /*
          * 原来采用for循环方式赋值，非常low，改用System.arraycopy()
          * for (int i = index; i < current - 1; i++) {
-            data[i] = data[i+1]; //该表元素下标
-        }*/
+         *      data[i] = data[i+1]; //该表元素下标
+         * }
+        */
         data[current-1] = null;  //将原来下标最右边的一位元素变成null
         --current;  //实际表长-1
         return true;
@@ -84,7 +85,7 @@ public class MyArrayList<E> {
      * @return      true:插入成功；false:失败
      */
     public boolean insert(int pos, E tar) {
-        if(pos < 0 || pos > current){
+        if (pos < 0 || pos > current) {
             throw new RuntimeException("插入位置不合法");
         }
         ensureCapacity();
