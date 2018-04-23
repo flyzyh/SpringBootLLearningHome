@@ -3,6 +3,10 @@ package com.zyh.springbtest.test1.utils;
 import java.util.Arrays;
 import java.util.Date;
 
+/**
+ * 自己实现的顺序列表结构
+ * @param <E>   顺序列表的数据单元类型
+ */
 public class MyArrayList<E> {
     private Object[] data = null; //data 用来保存此线性表的数据域
     private int length; //线性表的容量
@@ -11,13 +15,13 @@ public class MyArrayList<E> {
     /**
      * 默认长度为10
      */
-    public MyArrayList(){
+    MyArrayList(){
         this(10);
     }
 
     /**
      * 初始化线性表，声明表长度
-     * @param initialSize 长度
+     * @param initialSize 线性表初始长度
      */
     public MyArrayList(int initialSize){
         if(initialSize >=0){
@@ -46,8 +50,8 @@ public class MyArrayList<E> {
 
     /**
      * 删除指定位置的元素
-     * @param index
-     * @return
+     * @param index     要删除数据的位置
+     * @return false：删除失败；true：删除成功
      */
     public boolean delete(int index){
         //删除数组的元素：使用改变数组下标的方式达到删除的效果。
@@ -61,15 +65,24 @@ public class MyArrayList<E> {
             System.err.print(new Date() + ": 下标超出表长");
             return false;
         }
-        for (int i = index; i < current - 1; i++) {
+        //该表元素下标
+        System.arraycopy(data, index + 1, data, index, current - 1 - index);
+        /**
+         * 原来采用for循环方式赋值，非常low，改用System.arraycopy()
+         * for (int i = index; i < current - 1; i++) {
             data[i] = data[i+1]; //该表元素下标
-        }
+        }*/
         data[current-1] = null;  //将原来下标最右边的一位元素变成null
         --current;  //实际表长-1
         return true;
     }
 
-    //插入操作
+    /**
+     * 向表中插入数据
+     * @param pos   要插入数据的位置
+     * @param tar   要插入的数据
+     * @return      true:插入成功；false:失败
+     */
     public boolean insert(int pos, E tar) {
         if(pos < 0 || pos > current){
             throw new RuntimeException("插入位置不合法");
@@ -102,8 +115,8 @@ public class MyArrayList<E> {
 
     /**
      * 根据下标返回元素值
-     * @param index
-     * @return
+     * @param   index   想要获取对象的位置
+     * @return      需要的对象
      */
         public E get(int index){
             if(index >= 0){
@@ -126,7 +139,7 @@ public class MyArrayList<E> {
 
     /**
      * 返回实际表容量
-     * @return
+     * @return      当前表容量（current）
      */
     public int size(){
         return this.current;
@@ -134,15 +147,15 @@ public class MyArrayList<E> {
 
     /**
      * 返回总长度
-     * @return
+     * @return      表的总容量（length）
      */
     public  int getLength(){
         return this.length;
     }
 
     /**
-     *
      * 判断表是否为空
+     * @return  true:空; false:非空
      */
     public boolean isEmpty(){
         //return (current == 0) ? true : false;
