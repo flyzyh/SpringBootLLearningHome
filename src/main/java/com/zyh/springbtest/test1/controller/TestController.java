@@ -13,8 +13,8 @@ public class TestController {
     public String sayHi(){
         Gson gson = new Gson();
         NodeTest nodeTest = new NodeTest("syp","18");
-        gson.toJson(nodeTest);
-        return gson.toString();
+        String json = gson.toJson(nodeTest);
+        return json;
     }
 
     @RequestMapping("/sayHello")
